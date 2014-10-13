@@ -1,10 +1,5 @@
-ORDER;id_order;reference;id_shop_group;
-PRODUCT;id_order;product_id;product_attribute_id;product_name;product_quantity;product_price;reduction_percent;reduction_amount;reduction_amount_tax_incl;reduction_amount_tax_excl;group_reduction;product_quantity_discount;product_ean13;product_upc;product_reference;product_supplier_reference;product_weight;tax_name;tax_rate;ecotax;ecotax_tax_rate;discount_quantity_applied;download_hash;download_nb;download_deadline;total_price_tax_incl;total_price_tax_excl;total_shipping_price_tax_incl;total_shipping_price_tax_excl;unit_price_tax_excl;unit_price_tax_excl
-"ORDER";"3";"MBCJGTMOS";"1";
-"PRODUCT";"3";"70";"936";"Albin - Färgval : Black, Möbeltyp & beslag : M8";"4";"249.000000";"0.00";"0.000000";"0.000000";"0.000000";"0.00";"0.000000";"";"";"";"";"0.000000";"";"0.000";"0.000000";"0.000";"0";"";"0";"0000-00-00 00:00:00";"1225.080000";"996.000000";"0.000000";"0.000000";"249.000000";"249.000000"
-"ORDER";"4";"DNNWEQSEG";"1";
-"PRODUCT";"4";"70";"936";"Albin - Farbe : Schwarz, Möbel & Beschläge : M8";"4";"28.000000";"0.00";"0.000000";"0.000000";"0.000000";"0.00";"0.000000";"";"";"";"";"0.000000";"";"0.000";"0.000000";"0.000";"0";"";"0";"0000-00-00 00:00:00";"137.760000";"112.000000";"0.000000";"0.000000";"28.000000";"28.000000"
-"ORDER";"5";"ABURBWJGB";"1";
-"PRODUCT";"5";"68";"921";"Alfred Tischbein - Farbe : Schwarz, Größe : M";"4";"32.000000";"0.00";"0.000000";"0.000000";"0.000000";"0.00";"0.000000";"";"";"";"";"0.000000";"";"0.000";"0.000000";"0.000";"0";"";"0";"0000-00-00 00:00:00";"157.440000";"128.000000";"0.000000";"0.000000";"32.000000";"32.000000"
-"ORDER";"6";"HODIXRDPZ";"1";
-"PRODUCT";"6";"70";"936";"Albin - Farbe : Schwarz, Möbel & Beschläge : M8";"4";"28.000000";"0.00";"0.000000";"0.000000";"0.000000";"0.00";"0.000000";"";"";"";"";"0.000000";"";"0.000";"0.000000";"0.000";"0";"";"0";"0000-00-00 00:00:00";"137.760000";"112.000000";"0.000000";"0.000000";"28.000000";"28.000000"
+ORDER;id_order;reference;
+"ORDER";"3";"MBCJGTMOS";
+"ORDER";"4";"DNNWEQSEG";
+"ORDER";"5";"ABURBWJGB";
+"ORDER";"6";"HODIXRDPZ";

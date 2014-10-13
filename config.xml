@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <module>
-	<name>presta2csvorders</name>
-	<displayName><![CDATA[Presta 2 CSV Orders]]></displayName>
-	<version><![CDATA[1.40]]></version>
-	<description><![CDATA[Export your orders to CSV file.]]></description>
-	<author><![CDATA[Vinum Master]]></author>
+	<name>prettypegsorderexport</name>
+	<displayName><![CDATA[Prettypegs Order Export]]></displayName>
+	<version><![CDATA[1.0]]></version>
+	<description><![CDATA[Prettypegs special order export system.]]></description>
+	<author><![CDATA[Linus Karlsson]]></author>
 	<tab><![CDATA[export]]></tab>
 	<is_configurable>0</is_configurable>
 	<need_instance>1</need_instance>

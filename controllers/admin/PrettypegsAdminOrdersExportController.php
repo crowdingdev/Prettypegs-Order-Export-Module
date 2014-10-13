@@ -9,7 +9,7 @@
   */
 
 
-class AdminOrdersExportController extends ModuleAdminController
+class PrettypegsAdminOrdersExportController extends ModuleAdminController
 {
 	public $fieldnames=array(
 		1=>'id_order',
@@ -74,10 +74,10 @@ class AdminOrdersExportController extends ModuleAdminController
         $this->lang = true;
 
 
-		$this->_directory = dirname(_PS_MODULE_DIR_).'/modules/presta2csvorders/';
+		$this->_directory = dirname(_PS_MODULE_DIR_).'/modules/prettypegsorderexport/';
 		$this->_filename = $this->_directory.'export.csv';
-		$this->_filename_http = 'http://'.$_SERVER['HTTP_HOST'].__PS_BASE_URI__.'modules/presta2csvorders/export.csv';
-		$this ->_filenameExport_http = 'http://'.$_SERVER['HTTP_HOST'].__PS_BASE_URI__.'modules/presta2csvorders/export.csv';
+		$this->_filename_http = 'http://'.$_SERVER['HTTP_HOST'].__PS_BASE_URI__.'modules/prettypegsorderexport/export.csv';
+		$this ->_filenameExport_http = 'http://'.$_SERVER['HTTP_HOST'].__PS_BASE_URI__.'modules/prettypegsorderexport/export.csv';
 		$this->_adminDirectory= dirname(__FILE__).'/';
 		$id_lang = intval(Configuration::get('PS_LANG_DEFAULT'));
 
@@ -208,7 +208,7 @@ class AdminOrdersExportController extends ModuleAdminController
 		}
 	};
 
-	xhr.open("GET","../modules/presta2csvorders/getOrders.php?state="+state+"&from="+from+"&to="+to,true);
+	xhr.open("GET","../modules/prettypegsorderexport/getOrders.php?state="+state+"&from="+from+"&to="+to,true);
 	xhr.send(null);
 
 
@@ -269,7 +269,7 @@ function createCSV()
 
 	orderlist=orderlist.substr(0,orderlist.length-1);
 	fieldlist=fieldlist.substr(0,fieldlist.length-1);
-	xhr.open("GET","../modules/presta2csvorders/createCSV.php?ordersID="+orderlist+"&fields="+fieldlist ,true);
+	xhr.open("GET","../modules/prettypegsorderexport/createCSV.php?ordersID="+orderlist+"&fields="+fieldlist ,true);
 	xhr.send(null);
 }
 
@@ -473,15 +473,15 @@ if(whatobj[0].checked)
 						$html .= '</select>
 						<p style="padding:0px; margin:10px 0px 10px 0px;">'.$this->l('(Select state for which you want to display orders you want to export)').'</p></div>';
 	  $html .=  '</div><center>
-			<span id="loader" style="display: none;"><img src="../modules/presta2csvorders/img/loader.gif" alt="loading" /></span></center>';
+			<span id="loader" style="display: none;"><img src="../modules/prettypegsorderexport/img/loader.gif" alt="loading" /></span></center>';
 
 		$html .= '<div id="ordersHint"></div>';
 
 		$defaultLanguage = intval(Configuration::get('PS_LANG_DEFAULT'));
 
 		$html .= '</fieldset><br>
-		<fieldset><legend><img src="'.'../modules/presta2csvorders/logo.gif" alt="" title="" />'.$this->l('Choose fields to export').'</legend>
-		<center><span id="loader2" style="display: none;"><img src="../modules/presta2csvorders/img/loader.gif" alt="loading" /></span></center>
+		<fieldset><legend><img src="'.'../modules/prettypegsorderexport/logo.gif" alt="" title="" />'.$this->l('Choose fields to export').'</legend>
+		<center><span id="loader2" style="display: none;"><img src="../modules/prettypegsorderexport/img/loader.gif" alt="loading" /></span></center>
 <div id="fileLink" style="display:none;">
 			    	<br>'.$this->l('Your csv file is online at the following url :').'<br /><br><a href="'.$this ->_filenameExport_http.'" target="_blanck"><b>'.$this ->_filenameExport_http.'</b></a></p>
 					</div></center>
@@ -593,7 +593,7 @@ if(whatobj[0].checked)
 
 					</div>';
 	  $html .=  '<center>
-			<span id="loader" style="display: none;"><img src="../modules/presta2csvorders/img/loader.gif" alt="loading" /></span></center>';
+			<span id="loader" style="display: none;"><img src="../modules/prettypegsorderexport/img/loader.gif" alt="loading" /></span></center>';
 
 		$html .= '<div id="ordersHint"></div>';
 
@@ -602,7 +602,7 @@ if(whatobj[0].checked)
 		$html .= '</div>
         <div class="panel" style="background-color: #F4F7F7;"><h3><i class="icon-question-sign"></i> '.$this->l('Choose fields to export').'</h3>
 
-		<center><span id="loader2" style="display: none;"><img src="../modules/presta2csvorders/img/loader.gif" alt="loading" /></span></center>
+		<center><span id="loader2" style="display: none;"><img src="../modules/prettypegsorderexport/img/loader.gif" alt="loading" /></span></center>
 <div id="fileLink" style="display:none;">
 			    	<br>'.$this->l('Your csv file is online at the following url :').'<br /><br><a href="'.$this ->_filenameExport_http.'" target="_blanck"><b>'.$this ->_filenameExport_http.'</b></a></p>
 					</div></center>
@@ -652,11 +652,7 @@ if(whatobj[0].checked)
 		$html .= '</div></form>';
     }
 
-
-
-     $this->content= $html;
-
-
+    $this->content= $html;
 
 		return parent::renderList();
 

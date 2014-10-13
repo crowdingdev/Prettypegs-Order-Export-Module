@@ -20,7 +20,7 @@ class PrettypegsOrderExport extends Module
 		$this->tab = 'export';
 		$this->version = '1.0';
 		$this->author = 'Linus Karlsson';
-		$this->module_key= '706eaa94138178f075c12ab2b2f550c1';
+		$this->module_key= '706eaa94138178f175c1fab2b2f550c1';
 	
 		/* The parent construct is required for translations */
 		parent::__construct();
@@ -46,7 +46,7 @@ class PrettypegsOrderExport extends Module
 		$tab=new tab();
 		$tab->name[$id_lang]= 'Prettypegs Orders Export';
 		$tab->class_name= 'PrettypegsAdminOrdersExport';	
-		$tab->id_parent=Tab::getIdFromClassName('PrettypegsAdminOrders'); 
+		$tab->id_parent=Tab::getIdFromClassName('AdminOrders'); 
         $tab->module = $this->name;
 		$tab->add();		
 			return true;

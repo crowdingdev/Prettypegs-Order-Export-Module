@@ -59,9 +59,9 @@ include('../../config/config.inc.php');
 	
 $id_lang = intval(Configuration::get('PS_LANG_DEFAULT'));
 
-$directory = dirname(_PS_MODULE_DIR_).'/modules/presta2csvorders/';
+$directory = dirname(_PS_MODULE_DIR_).'/modules/prettypegsorderexport/';
 $filename = $directory.'export.csv';
-$filename_http = 'http://'.$_SERVER['HTTP_HOST'].__PS_BASE_URI__.'modules/presta2csvorders/export.csv';
+$filename_http = 'http://'.$_SERVER['HTTP_HOST'].__PS_BASE_URI__.'modules/prettypegsorderexport/export.csv';
 $adminDirectory= dirname(__FILE__).'/';
 
 @unlink($filename);

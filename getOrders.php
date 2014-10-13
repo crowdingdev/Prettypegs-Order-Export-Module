@@ -34,16 +34,16 @@ $sqllist='SELECT * FROM '._DB_PREFIX_.'orders o
 											WHERE oh.id_order = o .id_order
 											ORDER BY date_add DESC, id_order_history DESC
 											LIMIT 1)
-								AND o.date_add BETWEEN '.$date.''; 
+								AND o.date_add BETWEEN '.$date.'';
 }
 else
 {
-$sqllist='SELECT * FROM '._DB_PREFIX_.'orders o WHERE o.date_add BETWEEN '.$date.''; 
-}								
-							
-				$result=Db::getInstance()->executeS($sqllist);  
-		
-	
+$sqllist='SELECT * FROM '._DB_PREFIX_.'orders o WHERE o.date_add BETWEEN '.$date.'';
+}
+
+				$result=Db::getInstance()->executeS($sqllist);
+
+
 echo "<center><table cellspacing='0' cellpadding='0' class='table' style='width: 29.5em;' name='mytab'>
 <tr>
 <th style='background-color:#AFF4F7'><input type='checkbox' name='checkme' class='noborder' onclick='mycheckDelBoxes(orderBox);'</th>
@@ -59,10 +59,10 @@ if(!is_bool($result))
 $irow=0;
 foreach($result as $order)
   {
-  
+
   $orderInfo=new Order($order['id_order']);
   $addressDelivery = new Address($orderInfo->id_address_delivery, (int)($id_lang));
-  if (version_compare(_PS_VERSION_, '1.6', '>='))                         
+  if (version_compare(_PS_VERSION_, '1.6', '>='))
   echo '<tr class="'.($irow++ % 2 ? 'odd' : '').'">';
   else
   echo "<tr class=".($irow++ % 2 ? 'alt_row' : '').">";
@@ -79,5 +79,5 @@ echo "</table></center><br>";
 
 
 
-	
+
 ?>

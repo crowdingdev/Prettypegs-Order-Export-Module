@@ -59,27 +59,27 @@ class AdminOrdersExport extends AdminTab
 		45=>'delivery_address',
 		46=>'invoice_address',
 		47=>'products'
-		);	
-	
+		);
+
 
 	public function __construct()
 	{
-		
+
 	 	$this->table = 'ordersexport';
 		$this->optionTitle = 'Export Orders';
       	$this->context = Context::getContext();
         $this->lang = true;
 
-	
-		$this->_directory = dirname(_PS_MODULE_DIR_).'/modules/presta2csvorders/';
+
+		$this->_directory = dirname(_PS_MODULE_DIR_).'/modules/prettypegsorderexport/';
 		$this->_filename = $this->_directory.'export.csv';
-		$this->_filename_http = 'http://'.$_SERVER['HTTP_HOST'].__PS_BASE_URI__.'modules/presta2csvorders/export.csv';
-		$this ->_filenameExport_http = 'http://'.$_SERVER['HTTP_HOST'].__PS_BASE_URI__.'modules/presta2csvorders/export.csv';
+		$this->_filename_http = 'http://'.$_SERVER['HTTP_HOST'].__PS_BASE_URI__.'modules/prettypegsorderexport/export.csv';
+		$this ->_filenameExport_http = 'http://'.$_SERVER['HTTP_HOST'].__PS_BASE_URI__.'modules/prettypegsorderexport/export.csv';
 		$this->_adminDirectory= dirname(__FILE__).'/';
 		$id_lang = intval(Configuration::get('PS_LANG_DEFAULT'));
-	
+
     	parent::__construct();
-		
+
 	}
 	private function _addToFeed($str)
 	{
@@ -92,7 +92,7 @@ class AdminOrdersExport extends AdminTab
 	}
 	private function _postValidation()
 	{
-	
+
 		@unlink($this->_filename);
 		$fp = fopen($this->_filename, 'wb');
 		fclose($fp);
@@ -106,38 +106,38 @@ class AdminOrdersExport extends AdminTab
 	}
 	public function postProcess()
 	{
-		
+
 		$id_lang = intval(Configuration::get('PS_LANG_DEFAULT'));
 		$importURL = Configuration::get('VINUM_EXPINET_IMPORTURL');
 		$exportURL= Configuration::get('VINUM_EXPINET_EXPORTURL');
 		$carriersString= Configuration::get('VINUM_EXPINET_CARRIERS');
 		$stateExport = Configuration::get('VINUM_EXPINET_STATE_EXPORT');
-        
+
       // 	$context = Context::getContext();
 		$this->context->controller->addJqueryUI('ui.datepicker');
-	
-	
+
+
 
 		if (!empty($_POST))
 		{
 			   	$this->_postValidation();
 		}
-			
+
 		if (Tools::isSubmit('export'))
 		{
-		
+
 		}
-		
+
 		else
 			parent::postProcess();
-	
+
 	}
-	
+
 	public function renderList()
 	{
 		$id_lang = intval(Configuration::get('PS_LANG_DEFAULT'));
 	    $filename_http = 'http://'.$_SERVER['HTTP_HOST'].__PS_BASE_URI__.'modules/presta2csvexport/export.csv';
- 		
+
 	$html = '<fieldset style="background-color: #94B4C0;"><legend>'.$this->l('How to export orders in CSV file ?').'</legend>'.
 			'<ul>'.'
 				<li>'.$this->l('You can choose the date from and to, to export orders').'<br />'.'</li>
@@ -149,19 +149,19 @@ class AdminOrdersExport extends AdminTab
 				<li>'.$this->l('To differentiate the ORDER lines to PRODUCT lines, the first field is automatically named ORDER for orders and PRODUCT for products.').'</li>
 			</ul>
 		</fieldset><br />
-	  
-	
+
+
 		<fieldset style="background-color: #f9e3bd;"><legend>'.$this->l('Export Orders settings').'</legend>
-		
+
 		<script language="JavaScript">
     <!--
 	function getXMLHttpRequest()
 					{
 						var xhr = null;
-	
+
 						if (window.XMLHttpRequest || window.ActiveXObject)
 						{
-							if (window.ActiveXObject) 
+							if (window.ActiveXObject)
 							{
 								try
 								{
@@ -170,85 +170,85 @@ class AdminOrdersExport extends AdminTab
 								{
 									xhr = new ActiveXObject("Microsoft.XMLHTTP");
 								}
-							} else 
+							} else
 							{
-								xhr = new XMLHttpRequest(); 
+								xhr = new XMLHttpRequest();
 							}
-						} 
+						}
 						else
 						{
 							alert("Votre navigateur ne supporte pas l\'objet XMLHTTPRequest...");
 							return null;
 						}
-	
+
 						return xhr;
 					}
-		
+
     function showOrders(str)
 	{
-			
+
 		from="";
 		to="";
         state="";
-		with(document.Export) 
+		with(document.Export)
 		{
 			from=sp_from.value;
 			to=sp_to.value;
            	state=stateExport.value;
-		}	
-		
-       
-			
+		}
+
+
+
 		var xhr = getXMLHttpRequest();
-	
-	
+
+
 		xhr.onreadystatechange = function() {
-		
+
 		if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0)) {
-		
-			
+
+
 			document.getElementById("ordersHint").innerHTML=xhr.responseText;
 			document.getElementById("loader").style.display = "none";
 		}
 		else if (xhr.readyState < 4)
 		{
-		
+
 			document.getElementById("loader").style.display = "inline";
 
 		}
 	};
-			
-	xhr.open("GET","../modules/presta2csvorders/getOrders.php?state="+state+"&from="+from+"&to="+to,true);
+
+	xhr.open("GET","../modules/prettypegsorderexport/getOrders.php?state="+state+"&from="+from+"&to="+to,true);
 	xhr.send(null);
-	
+
 
 }
 function createCSV()
 {
-	
+
 	var xhr = getXMLHttpRequest();
-	
-	
+
+
 		xhr.onreadystatechange = function()
 		{
-		
+
 			if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0))
 			{
 				document.getElementById("loader2").style.display = "none";
 				document.getElementById("fileLink").style.display= "block";
-	
+
 			}
 			else if (xhr.readyState < 4)
 			{
 				document.getElementById("loader2").style.display = "inline";
 			}
 		};
-	
+
 	var orderlist = "";
 	var fieldlist="";
-	with(document.Export) 
+	with(document.Export)
 	{
-	
+
 		for(var i = 0; i < orderBox.length; i++)
 		{
 			if(orderBox[i].checked)
@@ -258,28 +258,28 @@ function createCSV()
 		}
 		if(orderBox.length==undefined)
 		{
-		
+
 			orderlist=orderBox.value+ ",";
-			
-		
-		}		
-		
+
+
+		}
+
 		for(var i = 0; i < whatfields.length; i++)
 		{
-		
+
 			if(whatfields[i].checked)
 			{
-			
+
 			fieldlist += whatfields[i].value + ",";
 			}
 		}
-		
-		
-	}	
-		
+
+
+	}
+
 	orderlist=orderlist.substr(0,orderlist.length-1);
 	fieldlist=fieldlist.substr(0,fieldlist.length-1);
-	xhr.open("GET","../modules/presta2csvorders/createCSV.php?ordersID="+orderlist+"&fields="+fieldlist ,true);
+	xhr.open("GET","../modules/prettypegsorderexport/createCSV.php?ordersID="+orderlist+"&fields="+fieldlist ,true);
 	xhr.send(null);
 }
 
@@ -295,12 +295,12 @@ day="0"+day;
 var year = currentTime.getFullYear();
 from=year+"-"+month+"-"+day;
 state="";
-with(document.Export) 
+with(document.Export)
 {
 	sp_from.value=from;
 	sp_to.value=from;
 	state=stateExport.value;
-}	
+}
 showOrders(state);
 }
 function getDay1()
@@ -316,13 +316,13 @@ day="0"+day;
 var year = yesterday.getFullYear();
 from=year+"-"+month+"-"+day;
 state="";
-with(document.Export) 
+with(document.Export)
 {
 	sp_from.value=from;
 	sp_to.value=from;
 	state=stateExport.value;
 }
-showOrders(state);	
+showOrders(state);
 }
 function getMonth()
 {
@@ -335,12 +335,12 @@ dayMonth= new Date(year, month+1, -1).getDate()+1;
 from=year+"-"+month+"-01";
 to=year+"-"+month+"-"+dayMonth;
 state="";
-with(document.Export) 
+with(document.Export)
 {
 	sp_from.value=from;
 	sp_to.value=to;
 	state=stateExport.value;
-}	
+}
 showOrders(state);
 }
 function getMonth1()
@@ -355,12 +355,12 @@ dayMonth= new Date(year, month+1, -1).getDate()+1;
 from=year+"-"+month+"-01";
 to=year+"-"+month+"-"+dayMonth;
 state="";
-with(document.Export) 
+with(document.Export)
 {
 	sp_from.value=from;
 	sp_to.value=to;
 	state=stateExport.value;
-}	
+}
 showOrders(state);
 }
 function getYear()
@@ -370,12 +370,12 @@ var year = currentTime.getFullYear();
 from=year+"-01-01";
 to=year+"-12-31";
 state="";
-with(document.Export) 
+with(document.Export)
 {
 	sp_from.value=from;
 	sp_to.value=to;
 	state=stateExport.value;
-}	
+}
 showOrders(state);
 }
 function getYear1()
@@ -386,18 +386,18 @@ var year = lastYear.getFullYear();
 from=year+"-01-01";
 to=year+"-12-31";
 state="";
-with(document.Export) 
+with(document.Export)
 {
 	sp_from.value=from;
 	sp_to.value=to;
 	state=stateExport.value;
-}	
+}
 showOrders(state);
 }
 function mycheckDelBoxes(whatobj)
 {
 
-with(document.Export) 
+with(document.Export)
 {
 
 for(var ic = 0; ic < whatobj.length; ic++)
@@ -418,13 +418,13 @@ if(whatobj[0].checked)
 			}
 			else
 			whatobj[0].checked=true;
-}		
 }
 }
-	
+}
+
     -->
     </script>
-		
+
 				<form name="Export" >';
                 $html.='
 				<script type="text/javascript">
@@ -437,7 +437,7 @@ if(whatobj[0].checked)
 							});
 					});
 				</script>';
-				
+
 				 $html .= '<label>'.$this->l('Available from:').'</label>
 			<div >
 			<div class="margin-form" >
@@ -450,9 +450,9 @@ if(whatobj[0].checked)
 				<input type="text" class="datepicker" name="sp_from" value="" style="text-align: center" id="sp_from" onchange="showOrders();" /><span style="font-weight:bold; color:#000000; font-size:12px"> Au:</span>
 				<input type="text" class="datepicker" name="sp_to" value="" style="text-align: center" id="sp_to" onchange="showOrders();" />
 			</div>';
-			
+
 			$states=OrderState::getOrderStates($id_lang);
-			
+
 			$html .= '<label>'.$this->l('Export State :').'</label>
 					<div class="margin-form" style="margin-top:10px">
 					<select id="stateExport" name="stateExport" onchange="showOrders(this.value);">
@@ -460,33 +460,33 @@ if(whatobj[0].checked)
 					foreach($states as $state)
 					{
 						$html .= '<option value="'.$state['id_order_state'].'">'.$state['name'].'</option>';
-						
+
 					}
 						$html .= '</select>
 						<p style="padding:0px; margin:10px 0px 10px 0px;">'.$this->l('(Select state for which you want to display orders you want to export)').'</p></div>';
 	  $html .=  '</div><center>
-			<span id="loader" style="display: none;"><img src="../modules/presta2csvorders/loader.gif" alt="loading" /></span></center>';		 
-	
+			<span id="loader" style="display: none;"><img src="../modules/prettypegsorderexport/loader.gif" alt="loading" /></span></center>';
+
 		$html .= '<div id="ordersHint"></div>';
-		
+
 		$defaultLanguage = intval(Configuration::get('PS_LANG_DEFAULT'));
-	
+
 		$html .= '</fieldset><br>
-		<fieldset><legend><img src="'.'../modules/presta2csvorders/logo.gif" alt="" title="" />'.$this->l('Choose fields to export').'</legend>
-		<center><span id="loader2" style="display: none;"><img src="../modules/presta2csvorders/loader.gif" alt="loading" /></span></center>	
+		<fieldset><legend><img src="'.'../modules/prettypegsorderexport/logo.gif" alt="" title="" />'.$this->l('Choose fields to export').'</legend>
+		<center><span id="loader2" style="display: none;"><img src="../modules/prettypegsorderexport/loader.gif" alt="loading" /></span></center>
 <div id="fileLink" style="display:none;">
 			    	<br>'.$this->l('Your csv file is online at the following url :').'<br /><br><a href="'.$this ->_filenameExport_http.'" target="_blanck"><b>'.$this ->_filenameExport_http.'</b></a></p>
 					</div></center>
-			
-	
+
+
 		      <center><input type="button" name="submitFields" value="'.$this->l('Create CSV').'" onClick="createCSV();"/><br><br>
 		      <input type="button" onclick="mycheckDelBoxes(whatfields);" value="'.$this->l('Select All').'" />
 					<input type="button" onclick="mycheckDelBoxes(whatfields);" value="'.$this->l('Unselect All').'" /><br></center>';
 		$html .= '<br><table style="text-align: left; width: 850px;" ><tr><td><br>
 				<span style="font-weight: bold; color: rgb(153, 0, 0);">'.$this->l('Choose the fields you want to export :').'<br><br></span></td><tr>
 				<td>';
-     
-    $compte=0;      		
+
+    $compte=0;
 		foreach($this->fieldnames as $key=>$name)
     {
 			/*$selected='';
@@ -495,11 +495,11 @@ if(whatobj[0].checked)
 					$selected=' checked';
 				}
 			}*/
-	
+
 			if($compte<18)
 			{
-			
-      $html .= '	
+
+      $html .= '
 			<span style="font-weight: bold;">'.$this->l($name).'</span>&nbsp<input type="checkbox" name="whatfields" id="field'.$key.'" value="'.$key.'" />
 			<small><small style="color: rgb(130, 130, 130);">'.$this->l($key).'</small></small>
 			<br><br>	';
@@ -509,38 +509,38 @@ if(whatobj[0].checked)
 			{
       $html .= '</td><td><span style="font-weight: bold;">'.$this->l($name).'</span>&nbsp<input type="checkbox" name="whatfields" id="field'.$key.'" value="'.$key.'" />
 	 <small><small style="color: rgb(130, 130, 130);">'.$this->l($key).'</small></small>
-		
+
 			<br><br>';
 			$compte=1;
       }
 		}
-		
+
 		$html .= '</td></tr></table><br><br><center>
 		 <input type="button" onclick="mycheckDelBoxes(whatfields);" value="'.$this->l('Select All').'" />
 					<input type="button" onclick="mycheckDelBoxes(whatfields);" value="'.$this->l('Unselect All').'" /><br>
 	  			<br><input type="button" name="submitFields" value="'.$this->l('Create CSV').'" onclick="createCSV();" /></center>';
-	
+
 		$html .= '</form></fieldset></div>';
-		
-		
-	
-	
+
+
+
+
      $this->content= $html;
-        
-        
-    	
-		return parent::renderList();	
-			
+
+
+
+		return parent::renderList();
+
 	}
-	
-	
+
+
 
 		public function displayForm($isMainTab = true)
 	{
-	
+
 			return parent::displayForm();
-		
-			
+
+
 	}
 
 }
