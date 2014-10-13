@@ -1,9 +1,9 @@
 <?php
-/** Module presta2csvorders compatible PS > 1.5 and 1.6
+/** Module prettypegs orders export
   * file presta2csvorders.php
-  * @author Vinum Master
+  * @author Vinum Master, Linus Karlsson
   * @copyright Vinum Master
-  * @version 1.40
+  * @version 1.0
   *
   */
 class PrettypegsOrderExport extends Module
