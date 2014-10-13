@@ -114,7 +114,7 @@ function printRowToFile($order_detail){
 		$country = New Country($order_detail['id_country']);
 		$reformatDate = date(" Y-m-d H:i:s", strtotime( $order_detail['invoice_date'] ));
 
-		addToFeed('"'.parseProductNameToProductCode($order_detail['product_name']).'";');
+		addToFeed('"'.parseProductNameToProductCode($order_detail['name_on_product'], $order_detail['product_attribute_id']).'";');
 		addToFeed('"'.$order_detail['product_quantity'].'";');
 		addToFeed('"'.$order_detail['seta'].'";');
 		addToFeed('"'.$order_detail['setb'].'";');
@@ -136,7 +136,7 @@ function printRowToFile($order_detail){
 																		// 1 is the id_lang
 		addToFeed('"'.Country::getNameById(1,$order_detail['id_country'] ).'";');
 		addToFeed('"'.$country->iso_code.'";');
-		addToFeed('"'. ($order_detail['mobile_phone'] != '' ? $order_detail['mobile_phone'] : $order_detail['phone'] ).'";');
+		addToFeed('"'. ($order_detail['phone_mobile'] != '' ? $order_detail['phone_mobile'] : $order_detail['phone'] ).'";');
 		addToFeed('"'.$order_detail['email'].'";');
 		addToFeed('"'.''.'";'); // payment left empty
 		addToFeed('"'.'NO'.'";');
@@ -162,29 +162,57 @@ function printRowToFile($order_detail){
 
 
 
-function parseProductNameToProductCode($productName){
+function parseProductNameToProductCode($productName, $productAttributeId){
+	
+	$size = 'A';
+	$color = '';
+	$attributes = DBQueryHelper::getOrderDetailAttributeLang($productAttributeId);
 
-	$name = strtoupper (explode('-',$productName)[0]);
-	$color = strtoupper (explode(':',$productName)[0]);
+	foreach ($attributes as $attribute){
 
-	preg_match('/:(.*?),/',$productName, $color);
-	$color = str_replace(' ', '', $color[1]);
+		if ($attribute['attribute_name'] == 'Large' )
+		{
+			$size = 'B';
+		}
+		if(strpos($productName,'Table')){
+			$size = 'T';
+		}
 
-	$size = '';
-	if (strpos($productName . ' ',' : M ' )){
-		$size = 'A ';
+		$all.= $attribute['attribute_name']. ', ';
+
+		if (
+			$attribute['attribute_name'] != 'Large' &&
+			$attribute['attribute_name'] != 'Regular' &&
+			$attribute['attribute_name'] != 'M8' &&
+			$attribute['attribute_name'] != 'Universal Fitting Plate' &&
+			$attribute['attribute_name'] != 'Fork Plate' ){
+
+			$color = $attribute['attribute_name'];
+
+		}
 	}
-	if (strpos($productName . ' ',' : L ' )){
-		$size = 'B ';
-	}
-	if (strpos($productName,'table' ) || strpos($productName,'bord') || strpos($productName,'Tischbein') ){
-		$size = 'T ';
-	}
-	$name = str_replace ( 'BORD' , '' , $name);
-	$name = str_replace ( 'TABLE' , '' , $name);
-	$name = str_replace ( 'TISCHBEIN' , '' , $name);
 
-	return rtrim ( $name) . ' ' . $size . $color   ;
+	$productName = str_replace ( ' Table' , '' , $productName);
+	return strtoupper($productName) . ' ' . $size . ' '. $color;
+
+	// $name = strtoupper (explode('-',$productName)[0]);
+	// $color = strtoupper (explode(':',$productName)[0]);
+	// preg_match('/:(.*?),/',$productName, $color);
+	// $color = str_replace(' ', '', $color[1]);
+	// $size = '';
+	// if (strpos($productName . ' ',' : M ' )){
+	// 	$size = 'A ';
+	// }
+	// if (strpos($productName . ' ',' : L ' )){
+	// 	$size = 'B ';
+	// }
+	// if (strpos( $productName,'table' ) || strpos($productName,'bord') || strpos($productName,'Tischbein')){
+	// 	$size = 'T ';
+	// }
+	// $name = str_replace ( 'BORD' , '' , $name);
+	// $name = str_replace ( 'TABLE' , '' , $name);
+	// $name = str_replace ( 'TISCHBEIN' , '' , $name);
+	// return rtrim ( $name) . ' ' . $size . $color   ;
 }
 
 function addToFeed($str)
